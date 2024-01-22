@@ -1,3 +1,20 @@
+Planned backend: 
+- Postgres as the DB, with 3rd part driver at github.com/lib/pq
+- go-gin for routing
+- TODO: write into struct with jmoiron/sqlx?
+
+Self note:
+- PascalCase for public access functions is convention, camelCase for private functionality. https://golang.org/doc/effective_go.html#mixed-caps
+- cmd/server/main.go as the main starting point of the backend.
+- database folder is in charge of talking with the database server.
+- models contain the structs we expect to use, and form the M part of the MVC that handles data and interacts with the DB.
+- should probably keep a secret file for duplication in database, so that users can type their own password. TODO: Allow user setup to copy some preset configuration file, then fill in their own postgres details.
+
+
+
+## Setting up Database Secrets
+
+
 # CVWO Assignment Sample Golang App
 
 This sample Golang app is provided to help you experiment and practice web development fundamentals.

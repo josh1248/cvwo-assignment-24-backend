@@ -6,3 +6,8 @@
 # Editor
 .idea/*
 .vscode/*
+
+# Mac
+.DS_Store
+
+# hide database access secrets
