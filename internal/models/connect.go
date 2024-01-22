@@ -2,11 +2,12 @@ package models
 
 import (
 	"database/sql"
+	"log"
 
 	_ "github.com/glebarez/go-sqlite"
 )
 
-func ConnectToDB() (*sql.DB, error) {
+func ConnectToDB() {
 	//switch between :memory: and a file directory for transient/permanent DBs.
 	db, err := sql.Open("sqlite", "internal/db/blogdb")
 	//not needed, since it will be closed upon interruption.
@@ -14,13 +15,15 @@ func ConnectToDB() (*sql.DB, error) {
 
 	if err != nil {
 		//possible shortening with named and naked returns?
-		return db, err
+		log.Fatal(err)
 	}
 
 	err = db.Ping()
 	if err != nil {
-		return db, err
+		log.Fatal(err)
 	}
+
+	log.Println("Database connection established.")
 
 	createCommand := `
 		CREATE TABLE users (
@@ -32,8 +35,8 @@ func ConnectToDB() (*sql.DB, error) {
 
 	_, err = db.Exec(createCommand)
 	if err != nil {
-		return db, err
-	} else {
-		return db, nil
+		log.Fatal(err)
 	}
+
+	log.Println("Table in database created.")
 }

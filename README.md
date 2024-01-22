@@ -49,6 +49,10 @@ Next, we can deliver a payload and check the output.
 
 - Renamed data structure folder and package from `models` to `entities`. Instead, the Go package that interacts with the DB files will be called `models`.
 
+SQLite controls: 
+- access a SQLite db with `sqlite3 <filename>`.
+- find the database layout with `.schema`.
+- exit the sqlite3 shell with `;` to exit multiline query mode, then type `.exit`.
 
 # CVWO Assignment Sample Golang App
 
