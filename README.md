@@ -1,7 +1,11 @@
-Planned backend: 
-- Postgres as the DB, with 3rd part driver at github.com/lib/pq
+Planned backend:
 - go-gin for routing
 - TODO: write into struct with jmoiron/sqlx?
+- ~Postgres as the DB, with 3rd part driver at github.com/lib/pq~
+**Edit:** I have decided to change the DB implementation from Postgres to SQLite3. A few reasons:
+- A previous consideration in using Postgres before SQLite was because SQLite in Go used to rely on a more complicated SQLite implementation with gcc at https://github.com/mattn/go-sqlite3, requiring complicated initialization. However I discovered a pure Go-based SQLite driver at https://github.com/glebarez/go-sqlite that has embedded SQLite and requires no environment or gcc shenanigans. Hence, setup is much easier.
+- SQLite stores its databases within files, making for very easy portability. Researching online, I discovered that Postgres-based Go APIs are not very friendly to use. Some require Postgres to be installed before running, others require a containerized Postgres within Docker to work. SQLite offers a more straightforward path to implementing a portable API.
+- Lack of access controls in SQLite does not pose an issue for my small web project, since what I am doing is not sensitive.
 
 Self note:
 - PascalCase for public access functions is convention, camelCase for private functionality. https://golang.org/doc/effective_go.html#mixed-caps
@@ -10,16 +14,36 @@ Self note:
 - models contain the structs we expect to use, and form the M part of the MVC that handles data and interacts with the DB.
 - should probably keep a secret file for duplication in database, so that users can type their own password. TODO: Allow user setup to copy some preset configuration file, then fill in their own postgres details.
 
-# Dev Log
+# How to initialize (self dev log)
 Set up working import statements within my repository with the following:
 - Commit this template repo into github. I used a dummy package called `repotest` with some trivial public functions to check for linkage later.
 - follow https://go.dev/doc/tutorial/create-module, and run `go mod init <link>` in the root repo, where `<link>` was the github link to my root repo without the `http://` at the front. While you technically do not need to have your module name be an actual URL, it is a standard procedure so that others can get your packet with `go get -u ...` remotely without having to download them.
 - get your URL link to your test package, like `repotest`, by checking with `go list ./...`
 - In some other go file, use this list as your package statement to test this out.
 - Run `go mod tidy`. This command will check all your Go files for import statements and download them as needed. It will then adjust the `go.mod` and `go.sum` files accordingly.
-- Run your `main.go` file, in this case within `cmd/server/main.go`, to ensure that your packages have been set up nicely.
+- Run your `main.go` file, in this case within `cmd/server/main.go`, to ensure that your packages have been set up nicely
 
+## API testing
+We can test our API's CRUD capabilities using the common HTTP requests `GET`, `POST`, `PATCH`, and `DELETE`.
 
+For this project, the DB lies in `localhost:5432` and the API lies in `localhost:8080`. This is combined with the specified routes in `internal/router` (or `internal/routes`) to form the URL we can use.
+
+Note: `localhost`, for our purposes, refers to the self-referential `127.0.0.1`.
+
+### GET
+I can test the routes `/users`, which should return a list of all users, by direct access to `localhost:8080/users`. Alternatively, use the following curl command:
+```Bash
+curl -X GET http://localhost:8080/users
+```
+curl defaults to `GET`, so `-X GET` is not necessary.
+
+A much easier method involves using Postman. I am using the Postman extension within VSCode, and I will be using Postman from now on. I will revisit `curl` when I am more comfortable.
+
+### POST
+Next, we can deliver a payload and check the output.
+```Bash
+
+```
 
 ## Setting up Database Secrets
 

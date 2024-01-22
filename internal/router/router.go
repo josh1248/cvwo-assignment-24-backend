@@ -10,6 +10,7 @@ import (
 func StartRoutes() {
 	fmt.Println("Test route now at http://localhost:8080")
 	router := gin.Default()
-	router.GET("/messages", handlers.GetGarbage)
+	router.GET("/users", handlers.GetAllUsers)
+	router.GET("/users/:name", handlers.GetUserByName)
 	router.Run("localhost:8080")
 }

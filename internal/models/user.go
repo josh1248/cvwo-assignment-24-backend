@@ -1,12 +1,13 @@
 package models
 
-import "fmt"
-
 type User struct {
 	ID   int    `json:"id"`
 	Name string `json:"name"`
 }
 
-func (user *User) Greet() string {
-	return fmt.Sprintf("Hello, I am %s", user.Name)
+// placeholder DB.
+var Users []User = []User{
+	{ID: 123, Name: "Jojo"},
+	{ID: 456, Name: "Hoho"},
+	{ID: 789, Name: "Lolo"},
 }

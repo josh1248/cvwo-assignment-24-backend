@@ -26,12 +26,13 @@ func throwGarbage(c *gin.Context) {
 }
 
 func main() {
-	fmt.Println(repotest.Hello(), "the package connections are working!")
+	fmt.Println(repotest.Hello())
 	db, err := database.ConnectToDB()
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Printf("%T", db)
+
+	fmt.Printf("%T", db) //silence compiler warnings
 
 	router.StartRoutes()
 }

@@ -5,5 +5,5 @@ import (
 )
 
 func Hello() string {
-	return fmt.Sprintf("Hello, %s", "world!")
+	return fmt.Sprintf("Package connections are working!")
 }
