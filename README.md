@@ -10,6 +10,13 @@ Self note:
 - models contain the structs we expect to use, and form the M part of the MVC that handles data and interacts with the DB.
 - should probably keep a secret file for duplication in database, so that users can type their own password. TODO: Allow user setup to copy some preset configuration file, then fill in their own postgres details.
 
+# Dev Log
+Set up working import statements within my repository with the following:
+- Commit this template repo into github
+- run `go mod init <link>` in the root repo, where `<link>` was the github link to my repo without the `http://` at the front.
+- readjust import statements to point to our repo
+- r
+
 
 
 ## Setting up Database Secrets
