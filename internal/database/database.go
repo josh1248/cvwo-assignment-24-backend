@@ -2,7 +2,6 @@ package database
 
 import (
 	"database/sql"
-	"log"
 
 	_ "github.com/lib/pq"
 )
@@ -21,18 +20,14 @@ func ConnectToDB() (*sql.DB, error) {
 	db, err := sql.Open("postgres", secretCredentials)
 	//defer db.Close()
 	if err != nil {
-		log.Fatal(err)
+		//possible shortening with named and naked returns.
 		return db, err
 	}
-	log.Println("Driver is running.")
 
 	err = db.Ping()
 	if err != nil {
-		log.Fatal(err)
 		return db, err
 	}
-
-	log.Println("Connected to database.")
 
 	return db, nil
 }

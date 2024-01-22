@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/database"
+	"github.com/josh1248/cvwo-assignment-24-backend/internal/router"
 	"github.com/josh1248/cvwo-assignment-24-backend/repotest"
 	// dependency check with go mod tidy.
 	// _ "github.com/lib/pq"
@@ -30,11 +31,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("%T", db)
+	fmt.Printf("%T", db)
 
-	fmt.Println("Test route now at http://localhost:8080")
-	router := gin.Default()
-	router.GET("/messages", throwGarbage)
-	router.Run("localhost:8080")
-
+	router.StartRoutes()
 }
