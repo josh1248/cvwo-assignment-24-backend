@@ -3,8 +3,8 @@ Planned backend:
 - TODO: write into struct with jmoiron/sqlx?
 - ~Postgres as the DB, with 3rd part driver at github.com/lib/pq~
 **Edit:** I have decided to change the DB implementation from Postgres to SQLite3. A few reasons:
-- A previous consideration in using Postgres before SQLite was because SQLite in Go used to rely on a more complicated SQLite implementation with gcc at https://github.com/mattn/go-sqlite3, requiring complicated initialization. However I discovered a pure Go-based SQLite driver at https://github.com/glebarez/go-sqlite that has embedded SQLite and requires no environment or gcc shenanigans. Hence, setup is much easier.
-- SQLite stores its databases within files, making for very easy portability. Researching online, I discovered that Postgres-based Go APIs are not very friendly to use. Some require Postgres to be installed before running, others require a containerized Postgres within Docker to work. SQLite offers a more straightforward path to implementing a portable API.
+- A previous consideration in using Postgres before SQLite was because SQLite in Go used to rely on a more complicated SQLite implementation with gcc at https://github.com/mattn/go-sqlite3, requiring complicated initialization. However I discovered a pure Go-based SQLite driver at https://github.com/glebarez/go-sqlite that has embedded SQLite and requires no environment or gcc shenanigans. Hence, setup is much easier. A small downside is the high number of dependencies that the latter driver uses (~20 total dependencies) compared to the former (2 dependencies only).
+- SQLite stores its databases within files, making for very easy portability. Researching online, I discovered that Postgres-based Go APIs are not very friendly to use. Some require Postgres to be installed before running, others require a containerized Postgres within Docker to work. SQLite offers a more straightforward path to implementing a portable API since it is serverless.
 - Lack of access controls in SQLite does not pose an issue for my small web project, since what I am doing is not sensitive.
 
 Self note:
@@ -45,7 +45,9 @@ Next, we can deliver a payload and check the output.
 
 ```
 
-## Setting up Database Secrets
+## Other Dev Logs
+
+- Renamed data structure folder and package from `models` to `entities`. Instead, the Go package that interacts with the DB files will be called `models`.
 
 
 # CVWO Assignment Sample Golang App

@@ -7,7 +7,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/josh1248/cvwo-assignment-24-backend/internal/database"
+	"github.com/josh1248/cvwo-assignment-24-backend/internal/models"
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/router"
 	"github.com/josh1248/cvwo-assignment-24-backend/repotest"
 	// dependency check with go mod tidy.
@@ -27,7 +27,7 @@ func throwGarbage(c *gin.Context) {
 
 func main() {
 	fmt.Println(repotest.Hello())
-	db, err := database.ConnectToDB()
+	db, err := models.ConnectToDB()
 	if err != nil {
 		log.Fatal(err)
 	}

@@ -1,24 +1,17 @@
-package database
+package models
 
 import (
 	"database/sql"
 
-	_ "github.com/lib/pq"
+	_ "github.com/glebarez/go-sqlite"
 )
 
-// 127.0.0.1 refers to localhost
-var secretCredentials string = `
-	user=postgres
-	password=xddd
-	host=127.0.0.1
-	port=5432
-	dbname=postgres
-	sslmode=disable
-`
-
 func ConnectToDB() (*sql.DB, error) {
-	db, err := sql.Open("postgres", secretCredentials)
+	//switch between :memory: and a file directory for transient/permanent DBs.
+	db, err := sql.Open("sqlite", ":memory:")
+	//not needed, since it will be closed upon interruption.
 	//defer db.Close()
+
 	if err != nil {
 		//possible shortening with named and naked returns.
 		return db, err
