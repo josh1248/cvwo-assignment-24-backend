@@ -2,17 +2,18 @@ Planned backend:
 - go-gin for routing
 - TODO: write into struct with jmoiron/sqlx?
 - ~Postgres as the DB, with 3rd part driver at github.com/lib/pq~
+  
 **Edit:** I have decided to change the DB implementation from Postgres to SQLite3. A few reasons:
-- A previous consideration in using Postgres before SQLite was because SQLite in Go used to rely on a more complicated SQLite implementation with gcc at https://github.com/mattn/go-sqlite3, requiring complicated initialization. However I discovered a pure Go-based SQLite driver at https://github.com/glebarez/go-sqlite that has embedded SQLite and requires no environment or gcc shenanigans. Hence, setup is much easier. A small downside is the high number of dependencies that the latter driver uses (~20 total dependencies) compared to the former (2 dependencies only).
-- SQLite stores its databases within files, making for very easy portability. Researching online, I discovered that Postgres-based Go APIs are not very friendly to use. Some require Postgres to be installed before running, others require a containerized Postgres within Docker to work. SQLite offers a more straightforward path to implementing a portable API since it is serverless.
-- Lack of access controls in SQLite does not pose an issue for my small web project, since what I am doing is not sensitive.
+  - A previous consideration in using Postgres before SQLite was because SQLite in Go used to rely on a more complicated SQLite implementation with gcc at https://github.com/mattn/go-sqlite3, requiring complicated initialization. However I discovered a pure Go-based SQLite driver at https://github.com/glebarez/go-sqlite that has embedded SQLite and requires no environment or gcc shenanigans. Hence, setup is much easier. A small downside is the high number of dependencies that the latter driver uses (~20 total dependencies) compared to the former (2 dependencies only).
+  - SQLite stores its databases within files, making for very easy portability. Researching online, I discovered that Postgres-based Go APIs are not very friendly to use. Some require Postgres to be installed before running, others require a containerized Postgres within Docker to work. SQLite offers a more straightforward path to implementing a portable API since it is serverless.
+  - Lack of access controls in SQLite does not pose an issue for my small web project, since what I am doing is not sensitive.
 
-Self note:
-- PascalCase for public access functions is convention, camelCase for private functionality. https://golang.org/doc/effective_go.html#mixed-caps
-- cmd/server/main.go as the main starting point of the backend.
-- database folder is in charge of talking with the database server.
-- models contain the structs we expect to use, and form the M part of the MVC that handles data and interacts with the DB.
-- should probably keep a secret file for duplication in database, so that users can type their own password. TODO: Allow user setup to copy some preset configuration file, then fill in their own postgres details.
+  Self note:
+  - PascalCase for public access functions is convention, camelCase for private functionality. https://golang.org/doc/effective_go.html#mixed-caps
+  - cmd/server/main.go as the main starting point of the backend.
+  - database folder is in charge of talking with the database server.
+  - models contain the structs we expect to use, and form the M part of the MVC that handles data and interacts with the DB.
+  - should probably keep a secret file for duplication in database, so that users can type their own password. TODO: Allow user setup to copy some preset configuration file, then fill in their own postgres details.
 
 # How to initialize (self dev log)
 Set up working import statements within my repository with the following:
