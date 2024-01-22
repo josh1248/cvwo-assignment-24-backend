@@ -12,10 +12,12 @@ Self note:
 
 # Dev Log
 Set up working import statements within my repository with the following:
-- Commit this template repo into github
-- run `go mod init <link>` in the root repo, where `<link>` was the github link to my repo without the `http://` at the front.
-- readjust import statements to point to our repo
-- r
+- Commit this template repo into github. I used a dummy package called `repotest` with some trivial public functions to check for linkage later.
+- follow https://go.dev/doc/tutorial/create-module, and run `go mod init <link>` in the root repo, where `<link>` was the github link to my root repo without the `http://` at the front. While you technically do not need to have your module name be an actual URL, it is a standard procedure so that others can get your packet with `go get -u ...` remotely without having to download them.
+- get your URL link to your test package, like `repotest`, by checking with `go list ./...`
+- In some other go file, use this list as your package statement to test this out.
+- Run `go mod tidy`. This command will check all your Go files for import statements and download them as needed. It will then adjust the `go.mod` and `go.sum` files accordingly.
+- Run your `main.go` file, in this case within `cmd/server/main.go`, to ensure that your packages have been set up nicely.
 
 
 
