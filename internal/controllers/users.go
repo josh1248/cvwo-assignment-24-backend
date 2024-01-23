@@ -18,33 +18,38 @@ func GetAllUsers(c *gin.Context) {
 }
 
 func GetUserByID(c *gin.Context) {
-	//special newUser variable that only has the name field.
-	newUser := struct {
-		Name string `json:"username"`
-	}{}
-
-	//reads into struct
-	err := c.ShouldBindJSON(&newUser)
+	users, err := models.FindUserByID(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadGateway, err)
-	}
-
-	err = models.CreateUser(newUser.Name)
-	if err != nil {
+		//placeholder error code here, for anything not successful.
+		//convert to JSON with gin.H.
+		//consider cases: server error, invalid username input.
 		c.JSON(http.StatusBadRequest, err)
 	} else {
-		c.JSON(http.StatusCreated, newUser)
+		c.JSON(http.StatusCreated, users)
 	}
 
 }
 
+// special newUser variable that only has the name field. one-off use here only.
+type MakeUser struct {
+	Name string `json:"name"`
+}
+
+// weigh server-side vs client-side data validation. security vs ease of implementation.
 func CreateUser(c *gin.Context) {
-	log.Println(c.Param("name"))
-	err := models.CreateUser(c.Param("name"))
+	var newUser MakeUser
+
+	//Unmarshals JSON data and reads into struct
+	err := c.ShouldBindJSON(&newUser)
+	if err != nil {
+		c.JSON(http.StatusBadGateway, "Error when creating user.")
+	}
+
+	log.Println(newUser.Name, "user created.")
+	err = models.CreateUser(newUser.Name)
 	if err != nil {
 		//placeholder controls.
-		//consider cases: server error, invalid username input.
-		c.JSON(http.StatusBadRequest, "Error when creating user.")
+		c.JSON(http.StatusBadRequest, "username already used.")
 	} else {
 		c.JSON(http.StatusOK, "successfully created.")
 	}
