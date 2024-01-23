@@ -15,6 +15,12 @@ Planned backend:
   - models contain the structs we expect to use, and form the M part of the MVC that handles data and interacts with the DB.
   - should probably keep a secret file for duplication in database, so that users can type their own password. TODO: Allow user setup to copy some preset configuration file, then fill in their own postgres details.
 
+current design: MVC.
+- routers direct URLs to appropriate controllers
+- controllers communicate with models
+- models communicate with SQLite for data.
+- models return Golang data. controllers then convert Golang data to JSON data with appropriate headers using go-gin functions.
+
 # How to initialize (self dev log)
 Set up working import statements within my repository with the following:
 - Commit this template repo into github. I used a dummy package called `repotest` with some trivial public functions to check for linkage later.
@@ -54,6 +60,8 @@ SQLite controls:
 - access a SQLite db with `sqlite3 <filename>`.
 - find the database layout with `.schema`.
 - exit the sqlite3 shell with `;` to exit multiline query mode, then type `.exit`.
+
+A key problem which I have faced is cleanly processing `SELECT` SQL queries. The built-in version is cumbersome and forces you to declare every variable in your table, which makes marshalling into JSON a nightmare. I considered using an ORM, like GORM, but I thought it was overkill for a project like this. Additionally, I quite enjoy having control over the SQL queries I make. Hence, I will be using the lightweight extension package `sqlx` for my work.
 
 # CVWO Assignment Sample Golang App
 

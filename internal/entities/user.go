@@ -1,7 +1,9 @@
 package entities
 
+// db tag marshalls SQL data into Golang data with sqlx.Select,
+// json tag marshalls Golang data to JSON with go-gin.
 type User struct {
-	ID         int    `json:"id"`
-	Name       string `json:"name"`
-	Reputation int    `json:"reputation"`
+	ID         int    `db:"id" json:"id"`
+	Name       string `db:"name" json:"name"`
+	Reputation int    `db:"reputation" json:"reputation"`
 }
