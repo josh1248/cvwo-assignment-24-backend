@@ -18,13 +18,24 @@ func GetAllUsers(c *gin.Context) {
 }
 
 func GetUserByID(c *gin.Context) {
-	user, err := models.FindUserByID(c.Param("id"))
+	//special newUser variable that only has the name field.
+	newUser := struct {
+		Name string `json:"username"`
+	}{}
+
+	//reads into struct
+	err := c.ShouldBindJSON(&newUser)
 	if err != nil {
-		//placeholder controls here.
-		c.JSON(http.StatusBadRequest, "User not found/invalid query.")
-	} else {
-		c.JSON(http.StatusOK, user)
+		c.JSON(http.StatusBadGateway, err)
 	}
+
+	err = models.CreateUser(newUser.Name)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err)
+	} else {
+		c.JSON(http.StatusCreated, newUser)
+	}
+
 }
 
 func CreateUser(c *gin.Context) {

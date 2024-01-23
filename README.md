@@ -66,6 +66,8 @@ A key problem which I have faced is cleanly processing `SELECT` SQL queries. The
 Also learnt what CORS is after I couldnt load my API stuff, which was on `localhost:8080/`, onto my frontend at `localhost:3000/`: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#requests_with_credentials.
 It is essentially a way to guard against attacks like cross site scripting (XSS) from other websites while permitting communcations.
 
+Chose to implement a UNIQUE tag to the username field so that form re-submissions do not create spam repeatusernames.
+
 # CVWO Assignment Sample Golang App
 
 This sample Golang app is provided to help you experiment and practice web development fundamentals.

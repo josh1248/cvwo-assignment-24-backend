@@ -30,8 +30,8 @@ func ConnectToDB() {
 	/*
 		createCommand := `
 			CREATE TABLE users (
-				id INT PRIMARY KEY,
-				name TEXT NOT NULL,
+				id INTEGER PRIMARY KEY,
+				name TEXT UNIQUE NOT NULL,
 				reputation INT NOT NULL
 			);
 		`
