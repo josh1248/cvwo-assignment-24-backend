@@ -44,11 +44,13 @@ func VerifyUser(c *gin.Context) {
 	}
 
 	ok, err := models.AuthenticateUser(loginUser)
-	if err != nil {
-		c.JSON(http.StatusBadGateway, "issue when connecting to backend.")
+	if err == sql.ErrNoRows || !ok {
+		c.JSON(http.StatusUnauthorized, "Wrong username or password.")
+	} else if err != nil {
+		c.JSON(http.StatusBadGateway, err.Error())
+	} else {
+		c.JSON(http.StatusOK, ok)
 	}
-
-	c.JSON(http.StatusOK, ok)
 }
 
 // weigh server-side vs client-side data validation. security vs ease of implementation.

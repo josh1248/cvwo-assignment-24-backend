@@ -7,7 +7,7 @@ import (
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/utils"
 )
 
-// need to break abstraction here since there is no direct way to translate Golang structs into SQL queries.
+// need to break abstraction here for testing purposes.
 // TODO: process password with backticks??
 var testUsers []entities.User = []entities.User{
 	{ID: 1, Name: "Jojo", Reputation: 200, Password: `letmein`},
@@ -42,9 +42,12 @@ func resetDB() {
 			log.Fatal(err)
 		}
 
-		_, err = db.Exec(`
-			INSERT INTO users (id, name, reputation, password) VALUES (?, ?, ?, ?)`,
-			testUser.ID, testUser.Name, testUser.Reputation, processedPW)
+		testUser.Password = processedPW
+
+		_, err = db.NamedExec(`
+			INSERT INTO users (id, name, reputation, password) 
+			VALUES (:id, :name, :reputation, :password)`,
+			testUser)
 		if err != nil {
 			log.Fatal(err)
 		}
