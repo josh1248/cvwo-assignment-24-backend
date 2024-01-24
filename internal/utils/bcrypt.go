@@ -1,4 +1,4 @@
-package auth
+package utils
 
 import "golang.org/x/crypto/bcrypt"
 
@@ -12,6 +12,14 @@ func ProcessPassword(password string) (string, error) {
 	return string(hashedPW), nil
 }
 
-func VerifyPassword(hashedPassword, password string) error {
-	return bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+func VerifyPassword(hashedPassword, password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	if err == bcrypt.ErrMismatchedHashAndPassword {
+		return false
+	} else if err == nil {
+		return true
+	} else {
+		//Unexpected case, crash the program and investigate what happened.
+		panic(err)
+	}
 }

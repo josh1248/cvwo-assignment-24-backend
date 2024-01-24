@@ -72,7 +72,9 @@ It is now time to enable deleting usernames. I think I should implement authenti
 
 First, we need a way to store passwords in our DB. Plaintext is definitely a no-go. Reading up, i shall be using the `bcrypt` library at `"golang.org/x/crypto/bcrypt"`. `bcrypt` not only helps in hashing passwords, but also in salting it (suffixing with random characters) to ensure unique hashes for the same password. It then stores the hash and cost into the hash itself for verification algorithms! It is named after the Blowfish cipher crypt that allows for safe password storage. (The industry standard now is to use 2FA, but this is an issue for another time.)
 
+Encountered import cycle issues. My models were taking the hashing algorithm from my auth folder, but my auth folder was taking database data from my models. Acyclic import cycles are enforced to ensure fast compile times in Go. The solution is to make a separate package that handles hashing only under a utils folder.
 
+sqlx's StructScan helps to convert data from a SQL query into a struct, and sqlx's NamedInsert does the reverse! how awesome.
 
 # CVWO Assignment Sample Golang App
 

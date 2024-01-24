@@ -3,8 +3,8 @@ package models
 import (
 	"log"
 
-	"github.com/josh1248/cvwo-assignment-24-backend/internal/auth"
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/entities"
+	"github.com/josh1248/cvwo-assignment-24-backend/internal/utils"
 )
 
 // need to break abstraction here since there is no direct way to translate Golang structs into SQL queries.
@@ -29,7 +29,7 @@ func resetDB() {
 			id INTEGER PRIMARY KEY,
 			name TEXT UNIQUE NOT NULL,
 			reputation INT NOT NULL,
-			password TEXT UNIQUE NOT NULL
+			password TEXT NOT NULL
 		)
 	`)
 	if err != nil {
@@ -37,7 +37,7 @@ func resetDB() {
 	}
 
 	for _, testUser := range testUsers {
-		processedPW, err := auth.ProcessPassword(testUser.Password)
+		processedPW, err := utils.ProcessPassword(testUser.Password)
 		if err != nil {
 			log.Fatal(err)
 		}

@@ -22,8 +22,8 @@ func StartRoutes() {
 		},
 	}))
 	router.GET("api/users", controllers.GetAllUsers)
-	router.GET("api/users/:id", controllers.GetUserByID)
-	router.POST("api/users/new", controllers.CreateUser)
-	//router.GET("/users/:name", controllers.GetUserByName)
+	router.GET("api/users/:name", controllers.GetUserByName)
+	router.POST("api/new/user", controllers.CreateUser)
+	router.POST("api/auth/login", controllers.VerifyUser)
 	router.Run("localhost:8080")
 }
