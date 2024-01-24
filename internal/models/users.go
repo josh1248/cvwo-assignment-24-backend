@@ -1,8 +1,8 @@
 package models
 
 import (
+	"github.com/josh1248/cvwo-assignment-24-backend/internal/auth"
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/entities"
-	"github.com/josh1248/cvwo-assignment-24-backend/internal/utils"
 )
 
 // Use StructScan here if memory becomes an issue.
@@ -42,5 +42,5 @@ func AuthenticateUser(formInput entities.InputUser) (bool, error) {
 		return false, err
 	}
 
-	return utils.VerifyPassword(user.Password, formInput.Password), nil
+	return auth.VerifyPassword(user.Password, formInput.Password), nil
 }

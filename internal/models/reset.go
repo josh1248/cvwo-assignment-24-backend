@@ -3,8 +3,8 @@ package models
 import (
 	"log"
 
+	"github.com/josh1248/cvwo-assignment-24-backend/internal/auth"
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/entities"
-	"github.com/josh1248/cvwo-assignment-24-backend/internal/utils"
 )
 
 // need to break abstraction here for testing purposes.
@@ -37,7 +37,7 @@ func resetDB() {
 	}
 
 	for _, testUser := range testUsers {
-		processedPW, err := utils.ProcessPassword(testUser.Password)
+		processedPW, err := auth.ProcessPassword(testUser.Password)
 		if err != nil {
 			log.Fatal(err)
 		}

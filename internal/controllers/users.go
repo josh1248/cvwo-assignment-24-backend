@@ -6,6 +6,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/josh1248/cvwo-assignment-24-backend/internal/auth"
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/entities"
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/models"
 )
@@ -34,6 +35,7 @@ func GetUserByName(c *gin.Context) {
 
 }
 
+// check if input data is correct. if true, return a cookie.
 func VerifyUser(c *gin.Context) {
 	var loginUser entities.InputUser
 
@@ -46,11 +48,24 @@ func VerifyUser(c *gin.Context) {
 	ok, err := models.AuthenticateUser(loginUser)
 	if err == sql.ErrNoRows || !ok {
 		c.JSON(http.StatusUnauthorized, "Wrong username or password.")
+		return
 	} else if err != nil {
 		c.JSON(http.StatusBadGateway, err.Error())
-	} else {
-		c.JSON(http.StatusOK, ok)
+		return
 	}
+
+	jwt_token, err := auth.GenerateJWT()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	//3rd argument sets time of validity of cookie.
+	//negative number to indicate transient cookie.
+	//4th argument indicates where cookie is valid, 5th argument for routes.
+	//use blank for valid cookie throughout any place.
+	//5th argument sets toggle to allow only HTTPS. false for testing purposes.
+	c.SetCookie("jwt", jwt_token, -1, "/", "", false, false)
 }
 
 // weigh server-side vs client-side data validation. security vs ease of implementation.
