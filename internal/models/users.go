@@ -10,11 +10,7 @@ import (
 func FindAllUsers() ([]entities.User, error) {
 	var users []entities.User
 	err := db.Select(&users, "SELECT * FROM users")
-	if err != nil {
-		return users, err
-	}
-
-	return users, nil
+	return users, err
 }
 
 // ID is unique, so return type is a single item

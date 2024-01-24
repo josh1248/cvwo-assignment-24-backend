@@ -6,4 +6,5 @@ type User struct {
 	ID         int    `db:"id" json:"id"`
 	Name       string `db:"name" json:"name"`
 	Reputation int    `db:"reputation" json:"reputation"`
+	Password   string `db:"password" json: "password"`
 }

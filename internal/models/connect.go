@@ -17,29 +17,15 @@ func ConnectToDB() {
 
 	//switch between :memory: and a file directory for transient/permanent DBs.
 	//sqlx.Connect combines sql.Open with sql.Ping
-	db, err = sqlx.Connect("sqlite", "internal/db/blogdb")
+	db, err = sqlx.Connect("sqlite", "internal/db/forumdb")
 	//not needed, since it will be closed upon interruption.
 	//defer db.Close()
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	//uncomment to clear out inputted data and reset to dummy data.
+	resetDB()
+
 	log.Println("Database connection established.")
-	log.Printf("%T", db)
-
-	/*
-		createCommand := `
-			CREATE TABLE users (
-				id INTEGER PRIMARY KEY,
-				name TEXT UNIQUE NOT NULL,
-				reputation INT NOT NULL
-			);
-		`
-
-		_, err = db.Exec(createCommand)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-	log.Println("Table in database created.")*/
 }

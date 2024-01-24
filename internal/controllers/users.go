@@ -25,7 +25,7 @@ func GetUserByID(c *gin.Context) {
 		//consider cases: server error, invalid username input.
 		c.JSON(http.StatusBadRequest, err)
 	} else {
-		c.JSON(http.StatusCreated, users)
+		c.JSON(http.StatusOK, users)
 	}
 
 }

@@ -70,6 +70,10 @@ Chose to implement a UNIQUE tag to the username field so that form re-submission
 
 It is now time to enable deleting usernames. I think I should implement authentication right away, so here goes. Following the tutorial at `https://www.youtube.com/watch?v=d4Y2DkKbxM0`. Although it uses mySQL, GORM, and Go Fiber, I know deep enough about my setup that it shouldnt be an issue.
 
+First, we need a way to store passwords in our DB. Plaintext is definitely a no-go. Reading up, i shall be using the `bcrypt` library at `"golang.org/x/crypto/bcrypt"`. `bcrypt` not only helps in hashing passwords, but also in salting it (suffixing with random characters) to ensure unique hashes for the same password. It then stores the hash and cost into the hash itself for verification algorithms! It is named after the Blowfish cipher crypt that allows for safe password storage. (The industry standard now is to use 2FA, but this is an issue for another time.)
+
+
+
 # CVWO Assignment Sample Golang App
 
 This sample Golang app is provided to help you experiment and practice web development fundamentals.
