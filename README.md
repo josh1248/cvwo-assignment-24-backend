@@ -61,12 +61,14 @@ SQLite controls:
 - find the database layout with `.schema`.
 - exit the sqlite3 shell with `;` to exit multiline query mode, then type `.exit`.
 
-A key problem which I have faced is cleanly processing `SELECT` SQL queries. The built-in version is cumbersome and forces you to declare every variable in your table, which makes marshalling into JSON a nightmare. I considered using an ORM, like GORM, but I thought it was overkill for a project like this. Additionally, I quite enjoy having control over the SQL queries I make. Hence, I will be using the lightweight extension package `sqlx` for my work.
+A key problem which I have faced is cleanly processing `SELECT` SQL queries. The built-in version is cumbersome and forces you to declare every variable in your table, which makes marshalling into JSON a nightmare. I considered using an ORM, like GORM, but I thought it was overkill for a project like this. I would like to learn the intricacies of running a web server and API before abstracting it away later. Additionally, I quite enjoy having control over the SQL queries I make. Hence, I will be using the lightweight extension package `sqlx` for my work.
 
 Also learnt what CORS is after I couldnt load my API stuff, which was on `localhost:8080/`, onto my frontend at `localhost:3000/`: https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS#requests_with_credentials.
 It is essentially a way to guard against attacks like cross site scripting (XSS) from other websites while permitting communcations.
 
 Chose to implement a UNIQUE tag to the username field so that form re-submissions do not create spam repeatusernames.
+
+It is now time to enable deleting usernames. I think I should implement authentication right away, so here goes. Following the tutorial at `https://www.youtube.com/watch?v=d4Y2DkKbxM0`. Although it uses mySQL, GORM, and Go Fiber, I know deep enough about my setup that it shouldnt be an issue.
 
 # CVWO Assignment Sample Golang App
 

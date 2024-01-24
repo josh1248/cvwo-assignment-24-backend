@@ -21,9 +21,9 @@ func StartRoutes() {
 			return origin == "https://github.com"
 		},
 	}))
-	router.GET("/users", controllers.GetAllUsers)
-	router.GET("/users/:id", controllers.GetUserByID)
-	router.POST("/users/new", controllers.CreateUser)
+	router.GET("api/users", controllers.GetAllUsers)
+	router.GET("api/users/:id", controllers.GetUserByID)
+	router.POST("api/users/new", controllers.CreateUser)
 	//router.GET("/users/:name", controllers.GetUserByName)
 	router.Run("localhost:8080")
 }
