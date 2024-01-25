@@ -24,9 +24,11 @@ Download and install Go by following the instructions [here](https://go.dev/doc/
 1. [Fork](https://docs.github.com/en/get-started/quickstart/fork-a-repo#forking-a-repository) this repo.
 2. [Clone](https://docs.github.com/en/get-started/quickstart/fork-a-repo#cloning-your-forked-repository) **your** forked repo.
 3. Open your terminal and navigate to the directory containing your cloned project.
-4. Run `go run cmd/server/main.go`.
-5. To ensure that your API is running, check `localhost:8080/api/posts`. You should see a list of 4 posts.
-6. Return to the [frontend setup](https://github.com/josh1248/cvwo-assignment-24-frontend).
+4. Duplicate `MasterKey.exampleenv` in the root repository.
+5. Rename this file to `MasterKey.env`, in which the server's secret key will be hidden in. It will be hidden by this repository's .gitignore.
+6. Run `go run cmd/server/main.go`.
+7. To ensure that your API is running, check `localhost:8080/api/posts`. You should see a list of 4 posts.
+8. Return to the [frontend setup](https://github.com/josh1248/cvwo-assignment-24-frontend).
 
 ### Implementation Details
 
@@ -36,7 +38,7 @@ This backend uses `go-gin` as its lightweight framework for HTTP server function
 
 This is the main file structure. It is roughly based on the MVC framework. It is generated with the `file-tree-generator` extension at VSCode.
 
-```C
+```
 📦cvwo-assignment-24-backend
  ┣ 📂cmd
  ┃ ┣ 📂server
