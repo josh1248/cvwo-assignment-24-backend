@@ -1,5 +1,7 @@
 # CVWO 2024 Assignment Backend
 
+Name: Josh Thoo Jen Sen
+
 This is the progress of my Golang backend as of 25 January 2024.
 
 I will be doing my own changes to enhance this beyond the deadline, as I think it is worth learning. Please consider hopping by here to see my product, which I will improve incrementally:
