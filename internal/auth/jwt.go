@@ -27,7 +27,7 @@ var (
 )
 
 func init() {
-	if err := godotenv.Load("MasterKey.env"); err != nil {
+	if err := godotenv.Load(".env"); err != nil {
 		panic(err)
 	}
 	masterKey = os.Getenv("JWT_SECRET_KEY")

@@ -1,2 +1,0 @@
-//rename this to MasterKey.env to set the JWT master key signing.
-JWT_SECRET_KEY=dontsharethiswithanyone!topsecrethushhush
