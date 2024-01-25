@@ -7,8 +7,16 @@ import (
 	"github.com/josh1248/cvwo-assignment-24-backend/internal/entities"
 )
 
+// Development-only function.
+// Clears junk data that may have been inputted for testing.
+// Helps to avoid the need for repeated db meddling in sqlite.
 // need to break abstraction here for testing purposes.
-// TODO: process password with backticks??
+func resetDB() {
+	resetUsers()
+	resetPosts()
+	//resetComments()
+}
+
 var testUsers []entities.User = []entities.User{
 	{ID: 1, Name: "Jojo", Reputation: 200, Password: `letmein`},
 	{ID: 2, Name: "PasswordGuy", Reputation: -30, Password: `1e!"E#@5yu6V52~\n42`},
@@ -16,9 +24,7 @@ var testUsers []entities.User = []entities.User{
 	{ID: 4, Name: "Geegee", Reputation: 0, Password: `letmein`},
 }
 
-// Clears junk data that may have been inputted for testing.
-// Helps to avoid the need for repeated db meddling in sqlite.
-func resetDB() {
+func resetUsers() {
 	_, err := db.Exec("DROP TABLE users")
 	if err != nil {
 		log.Fatal(err)
@@ -26,10 +32,10 @@ func resetDB() {
 
 	_, err = db.Exec(`
 		CREATE TABLE users (
-			id INTEGER PRIMARY KEY,
-			name TEXT UNIQUE NOT NULL,
-			reputation INT NOT NULL,
-			password TEXT NOT NULL
+			id 			INTEGER PRIMARY KEY,
+			name 		TEXT 	UNIQUE NOT NULL,
+			reputation 	INT		NOT NULL,
+			password 	TEXT 	NOT NULL
 		)
 	`)
 	if err != nil {
@@ -53,5 +59,52 @@ func resetDB() {
 		}
 	}
 
-	log.Println("Table in database restarted.")
+	log.Println("Users table in database restarted.")
 }
+
+var testPosts []entities.Post = []entities.Post{
+	{PostID: 1, UserID: 1, Reputation: 340, Title: `Golden boy`, Content: `Hello world!`},
+	{PostID: 2, UserID: 1, Reputation: -10000, Title: `Food tastes`, Content: `I love pineapple pizza.`},
+	{PostID: 3, UserID: 3, Reputation: 20, Title: `Passwords`, Content: `This website gotta have 2FA, man.`},
+	{PostID: 4, UserID: 4, Reputation: 5, Title: `Web programming is hard.`, Content: `It really is.`},
+}
+
+func resetPosts() {
+	_, err := db.Exec("DROP TABLE posts")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = db.Exec(`
+		CREATE TABLE posts (
+			postid 		INTEGER PRIMARY KEY,
+			userid 		TEXT NOT NULL,
+			reputation 	INT NOT NULL,
+			title 		TEXT NOT NULL,
+			content 	TEXT NOT NULL
+		)
+	`)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	for _, testPost := range testPosts {
+
+		_, err = db.NamedExec(`
+			INSERT INTO posts (postid, userid, reputation, title, content) 
+			VALUES (:postid, :userid, :reputation, :title, :content)`,
+			testPost)
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
+	log.Println("Posts table in database restarted.")
+}
+
+/*
+var testComments []entities.Comment = []entities.Comment{}
+
+func resetComments() {
+}
+*/

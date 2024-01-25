@@ -54,7 +54,7 @@ func VerifyUser(c *gin.Context) {
 		return
 	}
 
-	jwt_token, err := auth.GenerateJWT()
+	jwt_token, err := auth.GenerateJWT(loginUser.Name)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, err.Error())
 		return
@@ -65,7 +65,19 @@ func VerifyUser(c *gin.Context) {
 	//4th argument indicates where cookie is valid, 5th argument for routes.
 	//use blank for valid cookie throughout any place.
 	//5th argument sets toggle to allow only HTTPS. false for testing purposes.
-	c.SetCookie("jwt", jwt_token, -1, "/", "", false, false)
+	c.SetCookie("jwt", jwt_token, 60*60*24, "/", "", false, false)
+}
+
+func CheckCookie(c *gin.Context) {
+
+	valid, err := auth.VerifyJWT(c.GetHeader("Authorization"))
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, map[string]any{"message": "something went wrong."})
+	} else if !valid {
+		c.JSON(http.StatusUnauthorized, map[string]any{"message": "Invalid JWT."})
+	} else {
+		c.JSON(http.StatusOK, map[string]any{"message": "JWT verified."})
+	}
 }
 
 // weigh server-side vs client-side data validation. security vs ease of implementation.
